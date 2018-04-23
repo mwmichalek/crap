@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "remote-wiring-experience", "remote-wiring-experience.csproj", "{F57A7C87-A25D-4ECA-A1F6-9F251DA8C10D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mwm.ConnectToIt", "..\..\Personal\Mwm.ConnectToIt\Mwm.ConnectToIt.csproj", "{7D8537EA-6061-486B-BAA6-AFB43B007347}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mwm.ConnectToIt", "Mwm.ConnectToIt\Mwm.ConnectToIt\Mwm.ConnectToIt.csproj", "{7D8537EA-6061-486B-BAA6-AFB43B007347}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
