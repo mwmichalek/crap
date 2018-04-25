@@ -11,19 +11,24 @@
         Margin="{StaticResource MediumLeftRightMargin}">
 
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="TitleRow" Height="48"/>
+            <!--<RowDefinition x:Name="TitleRow" Height="48"/>-->
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock
+        <!--<TextBlock
             x:Name="TitlePage"
             x:Uid="Main_Title"
             Text="Navigation Item 2"
-            Style="{StaticResource PageTitleStyle}" />
+            Style="{StaticResource PageTitleStyle}" />-->
 
         <Grid 
             Grid.Row="1" 
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+            <TextBox x:Name="ConnectMessage" HorizontalAlignment="Left" Margin="28,22,0,0" Text="" VerticalAlignment="Top" Height="77" Width="958" FontSize="48"/>
+            <TextBox x:Name="SourceMessage" HorizontalAlignment="Left" Margin="81,224,0,0" Text="Hi" VerticalAlignment="Top" Height="39" Width="163"/>
+            <Button x:Name="BlinkLight" Content="Blink Light" HorizontalAlignment="Left" Margin="302,306,0,0" VerticalAlignment="Top" Height="39" Width="132" Click="BlinkLight_Click" />
+            <TextBlock x:Name="ReturnMessage" HorizontalAlignment="Left" Margin="441,224,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="38" Width="446"/>
+            <Button x:Name="SendMessage" Content="Send Message" HorizontalAlignment="Left" Margin="303,224,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.035,-0.042" Height="39" Width="132" Click="SendMessage_Click" />
             <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
         </Grid>

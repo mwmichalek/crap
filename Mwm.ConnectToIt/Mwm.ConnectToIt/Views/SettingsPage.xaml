@@ -15,14 +15,14 @@
     <Grid>
         <Grid Margin="{StaticResource MediumLeftRightMargin}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="48"/>
+                <!--<RowDefinition Height="48"/>-->
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock
+            <!--<TextBlock
                 Grid.Row="0"
                 x:Uid="Settings_Title"
                 x:Name="TitlePage"
-                Style="{StaticResource PageTitleStyle}" />
+                Style="{StaticResource PageTitleStyle}" />-->
 
             <StackPanel Grid.Row="1">
                 <TextBlock

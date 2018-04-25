@@ -42,6 +42,7 @@ Last updated October 16th, 2016
 // the minimum interval for sampling analog input
 #define MINIMUM_SAMPLING_INTERVAL   1
 
+#define ECHO_COMMAND 0x42
 
 /*==============================================================================
 * GLOBAL VARIABLES
