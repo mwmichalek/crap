@@ -1,3 +1,5 @@
+#include <LiquidCrystal_I2C.h>
+
 /*
 Firmata is a generic protocol for communicating with microcontrollers
 from software on a host computer. It is intended to work with
@@ -90,6 +92,9 @@ byte detachedServoCount = 0;
 byte servoCount = 0;
 
 boolean isResetting = false;
+
+LiquidCrystal_I2C _lcd = LiquidCrystal_I2C(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
+
 
 // Forward declare a few functions to avoid compiler errors with older versions
 // of the Arduino IDE.
@@ -766,11 +771,16 @@ void systemResetCallback()
 
 void stringCallback(char *myString)
 {
+	_lcd.setCursor(0, 1);           // go to the top left corner
+	_lcd.print(myString);
 	Firmata.sendString(myString);
 }
 
 void setup()
 {
+
+
+
 	Firmata.setFirmwareVersion(FIRMATA_FIRMWARE_MAJOR_VERSION, FIRMATA_FIRMWARE_MINOR_VERSION);
 
 	Firmata.attach(ANALOG_MESSAGE, analogWriteCallback);
@@ -794,7 +804,16 @@ void setup()
 		; // wait for serial port to connect. Needed for ATmega32u4-based boards and Arduino 101
 	}
 
-	systemResetCallback();  // reset to default config
+	_lcd.begin(20, 4);
+	_lcd.setBacklight(HIGH);
+
+	_lcd.setCursor(0, 0);            // go to the top left corner
+	_lcd.print("BF 9001");
+
+	//systemResetCallback();  // reset to default config
+
+	//_lcd.setCursor(0, 1);            // go to the top left corner
+	//_lcd.print("Test ");
 }
 
 /*==============================================================================
@@ -816,6 +835,10 @@ void loop()
 	// TODO - ensure that Stream buffer doesn't go over 60 bytes
 
 	currentMillis = millis();
+
+	//_lcd.setCursor(0, 1);            // go to the top left corner
+	//_lcd.print(String(currentMillis));
+
 	if (currentMillis - previousMillis > samplingInterval) {
 		previousMillis += samplingInterval;
 		/* ANALOGREAD - do all analogReads() at the configured sampling interval */
