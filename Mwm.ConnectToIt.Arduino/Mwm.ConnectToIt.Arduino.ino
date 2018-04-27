@@ -1,4 +1,7 @@
+#include <OneWire.h>
+#include <DallasTemperature.h>
 #include <LiquidCrystal_I2C.h>
+
 
 /*
 Firmata is a generic protocol for communicating with microcontrollers
@@ -52,6 +55,19 @@ Last updated October 16th, 2016
 #ifdef FIRMATA_SERIAL_FEATURE
 SerialFirmata serialFeature;
 #endif
+
+#define ONE_WIRE_BUS 3   
+
+OneWire oneWire1(ONE_WIRE_BUS);
+DallasTemperature sensor(&oneWire1);
+
+DeviceAddress probe04 = { 0x28, 0xFF, 0x43, 0x0E, 0x16, 0x15, 0x03, 0x90 };
+DeviceAddress probe05 = { 0x28, 0xFF, 0xD2, 0x37, 0x16, 0x15, 0x03, 0x31 };
+DeviceAddress probe06 = { 0x28, 0xFF, 0x4A, 0x3A, 0x16, 0x15, 0x03, 0x25 };
+
+
+
+
 
 /* analog inputs */
 int analogInputsToReport = 0; // bitwise array to store pin reporting
@@ -773,13 +789,29 @@ void stringCallback(char *myString)
 {
 	_lcd.setCursor(0, 1);           // go to the top left corner
 	_lcd.print(myString);
-	Firmata.sendString(myString);
+
+	sensor.requestTemperaturesByAddress(probe04);
+	String temp4 = String(sensor.getTempF(probe04));
+	sensor.requestTemperaturesByAddress(probe05);
+	String temp5 = String(sensor.getTempF(probe05));
+	sensor.requestTemperaturesByAddress(probe06);
+	String temp6 = String(sensor.getTempF(probe06));
+	String msg = (String)myString + " T1:" + temp4 + " T2:" + temp5 + " T3:" + temp6;
+
+	Firmata.sendString(toCharArray(msg));
+}
+
+char* toCharArray(String command) {
+	if (command.length() != 0) {
+		char *p = const_cast<char*>(command.c_str());
+		return p;
+	}
 }
 
 void setup()
 {
 
-
+	sensor.begin();
 
 	Firmata.setFirmwareVersion(FIRMATA_FIRMWARE_MAJOR_VERSION, FIRMATA_FIRMWARE_MINOR_VERSION);
 
