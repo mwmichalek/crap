@@ -27,8 +27,10 @@
             <TextBox x:Name="ConnectMessage" HorizontalAlignment="Left" Margin="28,22,0,0" Text="" VerticalAlignment="Top" Height="77" Width="958" FontSize="48"/>
             <TextBox x:Name="SourceMessage" HorizontalAlignment="Left" Margin="81,224,0,0" Text="Hi" VerticalAlignment="Top" Height="39" Width="163"/>
             <Button x:Name="BlinkLight" Content="Blink Light" HorizontalAlignment="Left" Margin="302,306,0,0" VerticalAlignment="Top" Height="39" Width="132" Click="BlinkLight_Click" />
-            <TextBlock x:Name="ReturnMessage" HorizontalAlignment="Left" Margin="441,224,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="38" Width="446"/>
+            <TextBlock x:Name="ReturnMessage" HorizontalAlignment="Left" Margin="441,224,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="380" Width="722"/>
             <Button x:Name="SendMessage" Content="Send Message" HorizontalAlignment="Left" Margin="303,224,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.035,-0.042" Height="39" Width="132" Click="SendMessage_Click" />
+            <Button x:Name="ConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="302,131,0,0" VerticalAlignment="Top" Width="132" Click="ConnectButton_Click"/>
+            <Button x:Name="DisconnectButton" Content="Disconnect" HorizontalAlignment="Left" Margin="509,131,0,0" VerticalAlignment="Top" Width="139" Click="DisconnectButton_Click"/>
             <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
         </Grid>

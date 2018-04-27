@@ -29,9 +29,9 @@ namespace Mwm.ConnectToIt.Views {
             InitializeComponent();
 
 
-            var action = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                FindConnection();
-            });
+            //var action = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+            //    FindConnection();
+            //});
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -85,6 +85,9 @@ namespace Mwm.ConnectToIt.Views {
 
             App.Arduino.DeviceReady += OnDeviceReady;
             App.Arduino.DeviceConnectionFailed += OnConnectionFailed;
+            App.Arduino.DeviceConnectionLost += OnConnectionLost;
+            App.Arduino.StringMessageReceived += OnStringMessageReceived;
+            App.Arduino.SysexMessageReceived += OnSysexMessageReceived;
 
             connectionStopwatch.Reset();
             connectionStopwatch.Start();
@@ -96,6 +99,30 @@ namespace Mwm.ConnectToIt.Views {
             //timeout.Interval = new TimeSpan(0, 0, 30);
             //timeout.Tick += Connection_TimeOut;
             //timeout.Start();
+        }
+
+        private void OnSysexMessageReceived(byte command, DataReader message) {
+            var action = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() => {
+                //timeout.Stop();
+                ConnectMessage.Text = $"Sysex Message Received: {message.ToString()}!";
+                connectionStopwatch.Stop();
+                Reset();
+            }));
+        }
+
+        private void OnStringMessageReceived(string message) {
+            var action = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() => {
+                ReturnMessage.Text = ReturnMessage.Text + message + Environment.NewLine;
+            }));
+        }
+
+        private void OnConnectionLost(string message) {
+            var action = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() => {
+                //timeout.Stop();
+                ConnectMessage.Text = "Connection Lost!";
+                connectionStopwatch.Stop();
+                Reset();
+            }));
         }
 
         private void OnDeviceReady() {
@@ -118,6 +145,7 @@ namespace Mwm.ConnectToIt.Views {
 
         private void OnConnectionCancelled() {
             //timeout.Stop();
+            ConnectMessage.Text = "Connection Cancelled.";
             connectionStopwatch.Stop();
             Reset();
         }
@@ -136,6 +164,7 @@ namespace Mwm.ConnectToIt.Views {
                 App.Connection.ConnectionEstablished -= OnDeviceReady;
                 App.Connection.ConnectionFailed -= OnConnectionFailed;
                 App.Connection.end();
+                ConnectMessage.Text = "Disconnected.";
             }
 
             if (cancelTokenSource != null) {
@@ -157,9 +186,19 @@ namespace Mwm.ConnectToIt.Views {
         }
 
         private void SendMessage_Click(object sender, RoutedEventArgs e) {
-            var buffer = CryptographicBuffer.ConvertStringToBinary(SourceMessage.Text, BinaryStringEncoding.Utf8);
+            //var buffer = CryptographicBuffer.ConvertStringToBinary(SourceMessage.Text, BinaryStringEncoding.Utf8);
             //var buffer = Encoding.ASCII.GetBytes(SourceMessage.Text);
-            App.Firmata.sendSysex(ECHO_COMMAND, buffer);
+            //App.Firmata.sendSysex(ECHO_COMMAND, buffer);
+
+            App.Firmata.sendString(SourceMessage.Text);
+        }
+
+        private void ConnectButton_Click(object sender, RoutedEventArgs e) {
+            FindConnection();
+        }
+
+        private void DisconnectButton_Click(object sender, RoutedEventArgs e) {
+            Reset();
         }
     }
 }

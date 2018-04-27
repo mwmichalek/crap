@@ -42,7 +42,6 @@ Last updated October 16th, 2016
 // the minimum interval for sampling analog input
 #define MINIMUM_SAMPLING_INTERVAL   1
 
-#define ECHO_COMMAND 0x42
 
 /*==============================================================================
 * GLOBAL VARIABLES
@@ -765,6 +764,11 @@ void systemResetCallback()
 	isResetting = false;
 }
 
+void stringCallback(char *myString)
+{
+	Firmata.sendString(myString);
+}
+
 void setup()
 {
 	Firmata.setFirmwareVersion(FIRMATA_FIRMWARE_MAJOR_VERSION, FIRMATA_FIRMWARE_MINOR_VERSION);
@@ -777,6 +781,7 @@ void setup()
 	Firmata.attach(SET_DIGITAL_PIN_VALUE, setPinValueCallback);
 	Firmata.attach(START_SYSEX, sysexCallback);
 	Firmata.attach(SYSTEM_RESET, systemResetCallback);
+	Firmata.attach(STRING_DATA, stringCallback);
 
 	// to use a port other than Serial, such as Serial1 on an Arduino Leonardo or Mega,
 	// Call begin(baud) on the alternate serial port and pass it to Firmata to begin like this:
